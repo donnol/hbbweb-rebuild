@@ -33,7 +33,7 @@ class User{
 		if (!isset ($_SESSION['shili']))
 			return array(
 				'code'=>1,
-				'msg'=>'Î´µÇÂ¼',
+				'msg'=>'has not login',
 				'data'=>''
 			);
 		return array(
@@ -55,7 +55,7 @@ class User{
 		if( count($users) == 0 )
 			return array(
 				'code'=>1,
-				'msg'=>'ÕÊºÅ»òÃÜÂë´íÎó',
+				'msg'=>'name or password error',
 				'data'=>''
 			);
 		

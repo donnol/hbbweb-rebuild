@@ -8,7 +8,7 @@ function add(){
 	global $book;
 	$result = $user->isLogin();
 	if( $result['code'] != 0 ){
-		header("Location:index.php");
+		header("Location:index.html");
 		exit();
 	}
 	
@@ -18,18 +18,14 @@ function add(){
 		$_POST["page"],
 		$_POST["content"]
 	);
-	if( $result['code'] == 0 ){
-		header("Location:bookinfo.php");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode($result);
 }
 function del(){
 	global $user;
 	global $book;
 	$result = $user->isLogin();
 	if( $result['code'] != 0 ){
-		header("Location:index.php");
+		header("Location:index.html");
 		exit();
 	}
 	
@@ -37,7 +33,7 @@ function del(){
 		$_GET["id"]
 	);
 	if( $result['code'] == 0 ){
-		header("Location:bookinfo.php");
+		header("Location:bookinfo.html");
 	}else{
 		echo $result['msg'];
 	}
@@ -47,8 +43,8 @@ function update(){
 	global $book;
 	$result = $user->isLogin();
 	if($result['code'] != 0){
-		header("Location:index.php");
-		exit();
+		header("Location:index.html");
+	exit();
 	}
 	
 	$result = $book->update(
@@ -58,13 +54,32 @@ function update(){
 		$_POST['content'],
 		$_GET['id']
 	);
-	if($result['code'] ==0){
-		header("Location:bookinfo.php");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode($result);
 }
+function get(){
+	global $user;
+	global $book;
+	$result = $user->isLogin();
+	if($result['code'] != 0){
+		header("Location:index.html");
+		exit();
+	}
 
+	$result = $book->get();
+	echo json_encode($result);
+}
+function getone(){
+		global $user;
+		global $book;
+		$result = $user->isLogin();
+		if($result['code'] != 0){
+				header("Location:index.html");
+				exit();
+				}
+		$id = $_GET['id'];
+		$result = $book->getone($id);
+		echo json_encode($result);
+		}
 $func = $_GET['func'];
 if( $func == 'add')
 	add();
@@ -72,6 +87,10 @@ else if( $func == 'del' )
 	del();
 else if( $func == 'update')
 	update();
+else if( $func == 'get')
+	get();
+else if( $func == 'getone')
+	getone();
 else
 	echo 'unknown func!'.$func;
 ?>

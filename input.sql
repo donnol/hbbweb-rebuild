@@ -28,4 +28,4 @@ CREATE TABLE IF NOT EXISTS t_user(
 )default charset=utf8mb4;
 
 insert into t_user(name,pwd,tel,addr,cert)values
-('jd',sha1('123'),'tel','addr','cert')
+('jd',sha1(123),'tel','addr','cert')

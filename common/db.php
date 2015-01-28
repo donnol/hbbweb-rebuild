@@ -14,7 +14,7 @@ class DB{
 				'msg'=>'',
 				'data'=>$this->dbconnect//在使用mysqli_connect链接数据库之前先看看是否已连接，已连接则返回dbconnect
 			);
-		$this->dbconnect = mysqli_connect("localhost:3310", "root","root","book");
+		$this->dbconnect = mysqli_connect("localhost:3306", "root","jd123","book");
 		if( $this->dbconnect == false )//链接失败
 			return array(
 				'code'=>1,

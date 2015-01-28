@@ -5,7 +5,7 @@ function add(){
 	global $user;
 	$result = $user->isLogin();
 	if( $result['code'] != 0 ){
-		header("Location:index.php");
+		header("Location:index.html");
 		exit();
 	}
 	
@@ -17,17 +17,13 @@ function add(){
 		$_POST["addr"],
 		$_POST["cert"]
 	);
-	if( $result['code'] == 0 ){
-		header("Location:dashboard.php");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode($result);
 }
 function del(){
 	global $user;
 	$result = $user->isLogin();
 	if( $result['code'] != 0 ){
-		header("Location:index.php");
+		header("Location:index.html");
 		exit();
 	}
 	
@@ -35,7 +31,7 @@ function del(){
 		$_GET["id"]
 	);
 	if( $result['code'] == 0 ){
-		header("Location:dashboard.php");
+		header("Location:dashboard.html");
 	}else{
 		echo $result['msg'];
 	}
@@ -44,7 +40,7 @@ function update(){
 	global $user;
 	$result = $user->isLogin();
 	if($result['code'] != 0){
-		header("Location:index.php");
+		header("Location:index.html");
 		exit();
 	}
 	
@@ -55,32 +51,30 @@ function update(){
 		$_POST["cert"],
 		$_GET["id"]
 	);
-	if( $result['code'] == 0){
-		header("Location:dashboard.php");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode($result);
 }
+function get(){
+		global $user;
+		$result = $user->isLogin();
+			if( $result['code'] != 0){
+						header("Location: index.html");
+						exit();
+					}
+			$result = $user->get();
+			echo json_encode($result);
+		}
 function login(){
 	global $user;
 	$result = $user->login(
 		$_POST['username'],
 		$_POST['pwd']
 	);
-	if( $result['code'] == 0 ){
-		header("Location:dashboard.php");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode( $result );
 }
 function logout(){
 	global $user;
 	$result = $user->logout();
-	if( $result['code'] == 0 ){
-		header("Location:index.php");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode( $result );
 }
 $func = $_GET['func'];
 if( $func == 'add')
@@ -93,6 +87,8 @@ else if( $func == 'login' )
 	login();
 else if( $func == 'logout' )
 	logout();
+else if( $func == 'get')
+		get();
 else
 	echo 'unknown func!'.$func;
 ?>

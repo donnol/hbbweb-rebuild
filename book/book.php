@@ -33,6 +33,10 @@ class Book{
 		));
 	}
 	
+	public function getone($id){
+			return $this->db->select('t_book', array('id'=>$id));
+			}
+
 	public function htmlEncode($val){
 		return $this->db->security->htmlEncode($val);
 	}

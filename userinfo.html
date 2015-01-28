@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+	<script language="javascript">
+		$(document).ready(function(){
+			$('#adduser').click(function(){
+				location.href = 'addUser.html';
+			});
+			$("#listuser").click(function(){
+						$.getJSON(
+							"user.php?func=get",
+							function(data){
+										var jsontip = $("#add");
+										var strHtml = "";
+										strHtml = "<table border='1' align='center'>";
+										jsontip.empty();
+										strHtml += "<tr><td>id</td><td>name</td><td>tel</td><td>addr</td><td>cert</td></tr>";
+										$.each(
+											data.data,
+											function(infoindex, info){
+														strHtml += "<tr><td>" + info['id'] + "</td><br/>";
+														strHtml += "<td>" + info['name'] + "</td><br />";
+														strHtml += "<td>" + info['tel'] + "</td><br />";
+														strHtml += "<td>" + info['addr'] + "</td><br />";
+														strHtml += "<td>" + info['cert'] + "</td><br />"; 
+														strHtml += "</tr>";
+													}	
+										);
+										strHtml += "<table>";
+										jsontip.html(strHtml);		
+									}	
+						);
+			});
+		});
+	</script>
+<title>user info</title>
+</head>
+<body>
+	
+		<div>
+			<button id="adduser" name="adduser" type="button"  class="nav_btn">add</button>
+			<button id="listuser" name="listuser" type="button" class="nav_btn">list</button>
+		</div>
+	
+		<div id="add"><h2>add user</h2></div>
+</body>
+</html>
