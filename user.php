@@ -30,11 +30,12 @@ function del(){
 	$result = $user->del(
 		$_GET["id"]
 	);
-	if( $result['code'] == 0 ){
-		header("Location:dashboard.html");
-	}else{
-		echo $result['msg'];
-	}
+	echo json_encode($result);
+	//if( $result['code'] == 0 ){
+	//	header("Location:dashboard.html");
+	//}else{
+	//	echo $result['msg'];
+	//}//
 }
 function update(){
 	global $user;
@@ -63,6 +64,17 @@ function get(){
 			$result = $user->get();
 			echo json_encode($result);
 		}
+function getone(){
+		global $user;
+		$result = $user->isLogin();
+		if($result['code'] != 0){
+					header("Location:index.html");
+					exit();
+				}
+		$id = $_GET['id'];
+		$result = $user->getone($id);
+		echo json_encode($result);
+		}
 function login(){
 	global $user;
 	$result = $user->login(
@@ -89,6 +101,8 @@ else if( $func == 'logout' )
 	logout();
 else if( $func == 'get')
 		get();
+else if ($func =='getone')
+		getone();
 else
 	echo 'unknown func!'.$func;
 ?>

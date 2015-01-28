@@ -32,11 +32,14 @@ function del(){
 	$result = $book->del(
 		$_GET["id"]
 	);
+	echo json_encode($result);
+	/*
 	if( $result['code'] == 0 ){
 		header("Location:bookinfo.html");
 	}else{
 		echo $result['msg'];
 	}
+	*/
 }
 function update(){
 	global $user;

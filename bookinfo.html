@@ -5,10 +5,13 @@
 <title>book info</title>
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
 	<script language="javascript">
+		function htmlEncode(str){
+					return $('<div/>').text(str).html();
+				}
+		function htmlDecode(str){
+					return $('<div/>').html(str).text();
+				}
 		$(document).ready(function(){
-				$("#sub").hide();
-				$("#changebook").hide();
-				$("#deletebook").hide();
 				$("#sub").hide();
 			$("#listbook").click(function(){
 					$("#changebook").show();
@@ -22,12 +25,12 @@
 										$.each(
 											data.data,
 											function(infoIndex, info){
-														strHtml += "<tr><td><input type='radio' name='rad' value='" + info["id"] + "'>";
-														strHtml += "</input></td><td>" + info["id"] + "</td><br/>";
-														strHtml += "<td>" + info["name"] + "</td><br/>";
-														strHtml += "<td>" + info["category"] + "</td><br/>";
-														strHtml += "<td>" + info["page"] + "</td><br/>";
-														strHtml += "<td>" + info["content"] + "</td></tr><br/>";
+														strHtml += "<tr><td><input type='radio' name='rad' value='" + htmlEncode(info["id"]) + "'>";
+														strHtml += "</input></td><td>" + htmlEncode(info["id"]) + "</td>";
+														strHtml += "<td>" + htmlEncode(info["name"]) + "</td>";
+														strHtml += "<td>" + htmlEncode(info["category"]) + "</td>";
+														strHtml += "<td>" + htmlEncode(info["page"]) + "</td>";
+														strHtml += "<td>" + htmlEncode(info["content"]) + "</td></tr>";
 													}
 										);
 										strHtml += "</table>";
@@ -65,11 +68,10 @@
 												$.each(
 													data.data,
 													function(infoIndex, info){
-															strHtml += "<tr><td>Name<input type='text' id='name' name='name' class='nav_td_input' align='left' value='" + info['name'] + "'></input></td></tr>";
-															strHtml += "<tr><td>Category<input type='text' id='cate' name='cate' class='nav_td_input' align='left' value='" + info['category'] + "'></input></td></tr>";
-															strHtml += "<tr><td>Page<input type='text' id='page' name='page' class='nav_td_input' align='left' value='" + info['page'] + "'></input></td></tr>";
-															strHtml += "<tr><td>Content<input type='text' id='content' name='content' class='nav_td_input' align='left' value='" + info['content'] + "'></input></td></tr>";
-
+															strHtml += "<tr><td>Name<input type='text' id='name' name='name' class='nav_td_input' align='left' value='" + htmlEncode(info['name']) + "'></input></td></tr>";
+															strHtml += "<tr><td>Category<input type='text' id='cate' name='cate' class='nav_td_input' align='left' value='" + htmlEncode(info['category']) + "'></input></td></tr>";
+															strHtml += "<tr><td>Page<input type='text' id='page' name='page' class='nav_td_input' align='left' value='" + htmlEncode(info['page']) + "'></input></td></tr>";
+															strHtml += "<tr><td>Content<input type='text' id='content' name='content' class='nav_td_input' align='left' value='" + htmlEncode(info['content']) + "'></input></td></tr>";
 															}
 												);
 												strHtml += "</table>";
@@ -79,7 +81,6 @@
 									//radval = 0;
 							}
 							}
-					$("#changebook").hide();
 					});
 			$("#sub").click(function(){
 					var name = $("input[name=name]").val();

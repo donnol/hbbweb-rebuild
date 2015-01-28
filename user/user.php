@@ -28,6 +28,9 @@ class User{
 	public function get(){
 		return @$this->db->select('t_user');
 	}
+	public function getone($id){
+			return $this->db->select('t_user', array('id'=>$id,));
+			}
 	public function isLogin(){
 		$this->beginSession();
 		if (!isset ($_SESSION['shili']))

@@ -2,12 +2,12 @@
 <head>
 	<title> home </title>
 	<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
-	<link type="text/css" href="css/style.css" />
+	<link type="text/css" href="./css/style.css" />
 </head>
 <body>
 	<script type="text/javascript">
     window.onload=function(){
-        document.getElementById("left").style.height = document.getElementById("tagContent").offsetHeight+"px";
+        document.getElementById("left").style.height = document.getElementById("tagContent").offSetHeight+"px";
     }
 	</script>
 	<script language="javascript">
@@ -44,23 +44,20 @@
 		</ul>
 	</div>
 	<div id="tagContent" class="nav">
-	<div>		<iframe src="userinfo.html" id="ifra" name="ifra">
-		
-		</iframe></div>
-	<div>	<iframe src="bookinfo.html" id="ifra" name="ifra">
-		</iframe></div>
+			
+		<iframe src="" id="ifra" name="ifra" height="80%" width="80%">
+		</iframe>
+	
 	</div>
 	</div>
 	</div>
 	<script>
 		$(document).ready(function(){
 			$('#h1').click(function(){
-				htmlobj=$.ajax({url:"userinfo.html", async:false});
-			$("#ifra").html(htmlobj.responseText);
+				$("#ifra").attr('src','userinfo.html?t='+Math.random());
 			});
 			$("#h2").click(function(){
-				htmlobj=$.ajax({url:"bookinfo.html", async:false});
-			$("#ifra").html(htmlobj.responseText);
+				$("#ifra").attr('src','bookinfo.html?t='+Math.random());
 			});
 		});
 	</script>
