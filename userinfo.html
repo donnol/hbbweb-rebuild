@@ -22,13 +22,12 @@ $(document).ready(function(){
 						location.href = "index.html";
 						return false;
 						}
-						//location.href = "index.html";
 						}
 					  );}
 				$('#adduser').click(function(){
 						location.href = 'addUser.html';
 						});
-				$("#listuser").click(function(){
+				if(true){
 						$.getJSON(
 								"user.php?func=get",
 								function(data){
@@ -59,7 +58,7 @@ $(document).ready(function(){
 								jsontip.html(strHtml);		
 								}	
 						);
-				});
+				}
 				$("#changeuser").click(function(){
 								$("#sub").show();
 								var rad = $("input:radio[name=rad]");
@@ -157,7 +156,6 @@ $(document).ready(function(){
 
 <div>
 <button id="adduser" name="adduser" type="button"  class="nav_btn">add</button>
-<button id="listuser" name="listuser" type="button" class="nav_btn">list</button>
 <button id="changeuser" name="changeuser" type="button" class="nav_btn">change</button>
 <button id="deleteuser" name="deleteuser" type="button" class="nav_btn">delete</button>
 <button id="sub" name="sub" type="button" class="nav_btn">submit</button>

@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>js test for table and array</title>
+<script type="text/javascript" src="table.js"></script>
+<script type="text/javascript" src="../scripts/jquery-1.11.1.min.js"></script>
+<script language="javascript">
+	$(function(){
+			var table = $('#table');
+			var data = new Array();
+			data[0] = new Array(1,2,3);
+			data[1] = new Array(4,5,6);
+			data[2] = new Array(7,8,9);
+			alert(createTable(table, data));
+			});
+</script>
+</head>
+<body>
+	<div id="table"></div>
+</body>
+</html>

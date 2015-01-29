@@ -64,6 +64,41 @@ class DB{
 			'data'=>$data
 		);
 	}
+	
+	public function findnamebyid($table,$data){
+			$result = $this->connect();
+			if($result['code'] != 0)
+					return $result;
+			$db = $result['data'];
+
+			$sql = 'select name from '.$this->security->sqlEncode($table);
+			if( count($data) != 0){
+					$sql .= ' where ';
+					$isFirst = true;
+					foreach($data as $key=>$value){
+							if($isFirst == false)
+								$sql .= ' and ';
+							$sql .= $this->security->sqlEncode($key)." = '".$this->security->sqlEncode($value)."' ";
+							$isFirst = false;
+							}
+					}
+				$query = mysqli_query($db, $sql);
+				if( $query == false)
+						return array(
+							'code'=>1,
+							'msg'=>'error has happen.'.$sql,
+							'data'=>''
+						);
+					$data = array();
+					while( $singleData = mysqli_fetch_array($query, MYSQL_ASSOC)){
+								$data[] = $singleData;
+							}
+					return array(
+						'code'=>0,
+						'msg'=>'',
+						'data'=>$data
+					);
+			}
 
 	public function insert($table,$data){
 		$result = $this->connect();

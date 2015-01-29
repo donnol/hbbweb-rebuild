@@ -4,13 +4,14 @@
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 <title>book info</title>
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/table.js"></script>
 <script language="javascript">
-function htmlEncode(str){
+/*function htmlEncode(str){
 		return $('<div/>').text(str).html();
 }
 function htmlDecode(str){
 		return $('<div/>').html(str).text();
-}
+}*/
 $(document).ready(function(){
 				if(true){
 				$.post(
@@ -26,7 +27,7 @@ $(document).ready(function(){
 						}
 					  );}
 				$("#sub").hide();
-				$("#listbook").click(function(){
+				/*$("#listbook").click(function()*/if(true){
 						$("#changebook").show();
 						$("#deletebook").show();
 						$.getJSON("book.php?func=get",
@@ -43,24 +44,27 @@ $(document).ready(function(){
 								$.each(
 										data.data,
 										function(infoIndex, info){
-										strHtml += "<tr><td><input type='radio' name='rad' value='" + htmlEncode(info["id"]) + "'>";
-										strHtml += "</input></td><td>" + htmlEncode(info["id"]) + "</td>";
+										strHtml += "<tr><td><input type='radio' name='rad' value='" + htmlEncode(info["id"]) + "'></input></td>";
+										
+										strHtml += "<td>" + htmlEncode(info["id"]) + "</td>";
 										strHtml += "<td>" + htmlEncode(info["name"]) + "</td>";
 										strHtml += "<td>" + htmlEncode(info["category"]) + "</td>";
 										strHtml += "<td>" + htmlEncode(info["page"]) + "</td>";
-										strHtml += "<td>" + htmlEncode(info["content"]) + "</td></tr>";
+										strHtml += "<td>" + htmlEncode(info["content"]) + "</td>";
+										
+										strHtml += "</tr>";
 										}
 									  );
 								strHtml += "</table>";
 								jsontip.html(strHtml);
 								}
 								);
-				});
+				}/*);*/
 				$("#changebook").click(function(){
 								$("#sub").show();
-								$("#deletebook").hide();
-								$("#addbook").hide();
-								$("#listbook").hide();
+								//$("#deletebook").hide();
+								//$("#addbook").hide();
+								//$("#listbook").hide();
 								var rad = $("input:radio[name=rad]");
 								var radval = 0;
 								var url = "";
@@ -102,6 +106,11 @@ $(document).ready(function(){
 								}
 				});
 				$("#sub").click(function(){
+								if($("input[name=name]").val()==""){
+										alert("name could not be empty.");
+										location.href = "bookinfo.html";
+										return false;
+										}
 								var name = $("input[name=name]").val();
 								var cate = $("input[name=cate]").val();
 								var page = $("input[name=page]").val();
@@ -158,7 +167,7 @@ $(document).ready(function(){
 <body>
 <div class="nav" id="d1">
 <div>
-<button id="listbook" name="listbook" class="nav_btn" >list</button>
+<!--<button id="listbook" name="listbook" class="nav_btn" >list</button>-->
 <button id="addbook" name="addbook" class="nav_btn" >add</button>
 <button id='changebook' name='changebook' class='nav_btn' >change</button>
 <button id='deletebook' name='deletebook' class='nav_btn' >delete</button>
