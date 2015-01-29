@@ -87,16 +87,30 @@ class User{
 		}
 
 		public function update($name,$tel,$addr,$cert,$id){
-				$re = $this->db->update('t_user', array('name'=>$name));
+				$re = $this->db->select('t_user', array('name'=>$name));
 				if($re['code'] != 0)
 						return $re;
 
 				if( count($re['data'] != 0)){
-						return array(
-										'code'=>1,
-										'msg'=>'name is already exist.',
-										'data'=>''
-									);
+						foreach($re['data'] as $key=>$value){
+
+								if($value['name'] != $name){
+										return array(
+														'code'=>1,
+														'msg'=>'name is already exist.',
+														'data'=>''
+													);
+								}else{
+										return $this->db->update(
+														't_user', array(
+																'name'=>$name,
+																'tel'=>$tel,
+																'addr'=>$addr,
+																'cert'=>$cert,),
+														array('id'=>$id,)
+														);
+								}
+						}
 				}
 				else{
 						return $this->db->update('t_user', array(

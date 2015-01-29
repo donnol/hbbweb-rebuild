@@ -42,11 +42,25 @@ class Book{
 						return $re;
 
 				if( count($re['data']) != 0){
-						return array(
-										'code'=>1,
-										'msg'=>'name is already exist.',
-										'data'=>''
-									);
+						foreach($re['data'] as $key=>$value){
+								if($value['name'] != $name){
+										return array(
+														'code'=>1,
+														'msg'=>'name is already exist.',
+														'data'=>''
+													);
+								}else{
+										return $this->db->update('t_book',array(
+																'name'=>$name,
+																'category'=>$category,
+																'page'=>$page,
+																'content'=>$content,			
+																), array(
+																		'id'=>$id,
+																		));
+
+								}
+						}
 				}
 				else{
 						return $this->db->update('t_book',array(

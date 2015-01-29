@@ -32,6 +32,7 @@ $(document).ready(function(){
 								data = JSON.parse(data);
 								if(data.code != 0){
 								alert(data.msg);
+								location.href = "bookinfo.html";
 								return false;
 								}
 								location.href = "bookinfo.html";
