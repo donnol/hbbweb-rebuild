@@ -4,96 +4,84 @@ require_once(dirname(__FILE__).'/book/book.php');
 $user = new User();
 $book = new Book();
 function add(){
-	global $user;
-	global $book;
-	$result = $user->isLogin();
-	if( $result['code'] != 0 ){
-		header("Location:index.html");
-		exit();
-	}
-	
-	$result = $book->add(
-		$_POST["name"],
-		$_POST["cate"],
-		$_POST["page"],
-		$_POST["content"]
-	);
-	echo json_encode($result);
+		global $user;
+		global $book;
+		$result = $user->isLogin();
+		if( $result['code'] != 0 ){
+				echo json_encode($result);
+		}
+
+		$result = $book->add(
+						$_POST["name"],
+						$_POST["cate"],
+						$_POST["page"],
+						$_POST["content"]
+						);
+		echo json_encode($result);
 }
 function del(){
-	global $user;
-	global $book;
-	$result = $user->isLogin();
-	if( $result['code'] != 0 ){
-		header("Location:index.html");
-		exit();
-	}
-	
-	$result = $book->del(
-		$_GET["id"]
-	);
-	echo json_encode($result);
-	/*
-	if( $result['code'] == 0 ){
-		header("Location:bookinfo.html");
-	}else{
-		echo $result['msg'];
-	}
-	*/
+		global $user;
+		global $book;
+		$result = $user->isLogin();
+		if( $result['code'] != 0 ){
+				echo json_encode($result);
+		}
+
+		$result = $book->del(
+						$_GET["id"]
+						);
+		echo json_encode($result);
 }
 function update(){
-	global $user;
-	global $book;
-	$result = $user->isLogin();
-	if($result['code'] != 0){
-		header("Location:index.html");
-	exit();
-	}
-	
-	$result = $book->update(
-		$_POST['name'],
-		$_POST['cate'],
-		$_POST['page'],
-		$_POST['content'],
-		$_GET['id']
-	);
-	echo json_encode($result);
+		global $user;
+		global $book;
+		$result = $user->isLogin();
+		if($result['code'] != 0){
+				echo json_encode($result);
+		}
+
+		$result = $book->update(
+						$_POST['name'],
+						$_POST['cate'],
+						$_POST['page'],
+						$_POST['content'],
+						$_GET['id']
+						);
+		echo json_encode($result);
 }
 function get(){
-	global $user;
-	global $book;
-	$result = $user->isLogin();
-	if($result['code'] != 0){
-		header("Location:index.html");
-		exit();
-	}
+		global $user;
+		global $book;
+		$result = $user->isLogin();
+		if($result['code'] != 0){
+				echo json_encode($result);
+		}
 
-	$result = $book->get();
-	echo json_encode($result);
+		$result = $book->get();
+		echo json_encode($result);
 }
 function getone(){
 		global $user;
 		global $book;
 		$result = $user->isLogin();
 		if($result['code'] != 0){
-				header("Location:index.html");
-				exit();
-				}
+				echo json_encode($result);
+		}
 		$id = $_GET['id'];
 		$result = $book->getone($id);
 		echo json_encode($result);
-		}
+}
 $func = $_GET['func'];
 if( $func == 'add')
-	add();
+add();
 else if( $func == 'del' )
-	del();
+del();
 else if( $func == 'update')
-	update();
+update();
 else if( $func == 'get')
-	get();
+get();
 else if( $func == 'getone')
-	getone();
+getone();
 else
-	echo 'unknown func!'.$func;
+echo 'unknown func!'.$func;
 ?>

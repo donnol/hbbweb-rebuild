@@ -4,143 +4,156 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
-	<script language="javascript">
-		function htmlEncode(str){
-					return $('<div/>').text(str).html();
-				}
-		function htmlDecode(str){
-					return $('<div/>').html(str).text();
-				}
-		$(document).ready(function(){
-			$('#adduser').click(function(){
-				location.href = 'addUser.html';
-			});
-			$("#listuser").click(function(){
+<script language="javascript">
+function htmlEncode(str){
+		return $('<div/>').text(str).html();
+}
+function htmlDecode(str){
+		return $('<div/>').html(str).text();
+}
+$(document).ready(function(){
+				if(true){
+				$.post(
+						"user.php?func=isLogin",
+						function(data){
+						data = JSON.parse(data);
+						if(data.code != 0){
+						alert(data.msg);
+						location.href = "index.html";
+						return false;
+						}
+						//location.href = "index.html";
+						}
+					  );}
+				$('#adduser').click(function(){
+						location.href = 'addUser.html';
+						});
+				$("#listuser").click(function(){
 						$.getJSON(
-							"user.php?func=get",
-							function(data){
+								"user.php?func=get",
+								function(data){
+								var jsontip = $("#tagUser");
+								var strHtml = "";
+								strHtml = "<table border='1' align='center'>";
+								jsontip.empty();
+								strHtml += "<tr><td></td><td>id</td><td>name</td><td>tel</td><td>addr</td><td>cert</td></tr>";
+								$.each(
+										data.data,
+										function(infoindex, info){
+										strHtml += "<tr><td><input type='radio' name='rad' value='" +htmlEncode(info["id"]) + "'>";
+										strHtml += "</input></td><td>" + htmlEncode(info['id']) + "</td>";
+										strHtml += "<td>" + htmlEncode(info['name']) + "</td>";
+										strHtml += "<td>" + htmlEncode(info['tel']) + "</td>";
+										strHtml += "<td>" + htmlEncode(info['addr']) + "</td>";
+										strHtml += "<td>" + htmlEncode(info['cert']) + "</td>"; 
+										strHtml += "</tr>";
+										}	
+									  );
+								strHtml += "</table>";
+								jsontip.html(strHtml);		
+								}	
+						);
+				});
+				$("#changeuser").click(function(){
+								$("#sub").show();
+								var rad = $("input:radio[name=rad]");
+								var radval = 0;
+								var url = "";
+								for(var i=0; i < rad.length; i++){
+								if(rad[i].checked){
+								radval = $("input:radio[name=rad]:checked").val();
+								url = "user.php?func=getone&id=" + radval;
+								$.post(
+										url,
+										function(data){
+										data = JSON.parse(data);
+										if(data.code != 0){
+										alert(data.msg);
+										return false;
+										}
+
 										var jsontip = $("#tagUser");
 										var strHtml = "";
-										strHtml = "<table border='1' align='center'>";
 										jsontip.empty();
-										strHtml += "<tr><td></td><td>id</td><td>name</td><td>tel</td><td>addr</td><td>cert</td></tr>";
+										strHtml += "<table border='1' align='center'>";
+										strHtml += "<input type='hidden' name='id' value='" + radval +"'></input>";
 										$.each(
-											data.data,
-											function(infoindex, info){
-														strHtml += "<tr><td><input type='radio' name='rad' value='" +htmlEncode(info["id"]) + "'>";
-														strHtml += "</input></td><td>" + htmlEncode(info['id']) + "</td>";
-														strHtml += "<td>" + htmlEncode(info['name']) + "</td>";
-														strHtml += "<td>" + htmlEncode(info['tel']) + "</td>";
-														strHtml += "<td>" + htmlEncode(info['addr']) + "</td>";
-														strHtml += "<td>" + htmlEncode(info['cert']) + "</td>"; 
-														strHtml += "</tr>";
-													}	
-										);
+												data.data,
+												function(infoIndex, info){
+												strHtml += "<tr><td>Name<input type='text' id='name' name='name' class='nav_td_input' align='left' value='" + htmlEncode(info['name']) + "'></input></td></tr>";
+												strHtml += "<tr><td>Tel<input type='text' id='tel' name='tel' class='nav_td_input' align='left' value='" + htmlEncode(info['tel']) + "'></input></td></tr>";
+												strHtml += "<tr><td>Addr<input type='text' id='addr' name='addr' class='nav_td_input' align='left' value='" + htmlEncode(info['addr']) + "'></input></td></tr>";
+												strHtml += "<tr><td>Cert<input type='text' id='cert' name='cert' class='nav_td_input' align='left' value='" + htmlEncode(info['cert']) + "'></input></td></tr>";
+												}
+											  );
 										strHtml += "</table>";
-										jsontip.html(strHtml);		
-									}	
-						);
-			});
-			$("#changeuser").click(function(){
-					$("#sub").show();
-					var rad = $("input:radio[name=rad]");
-					var radval = 0;
-					var url = "";
-					for(var i=0; i < rad.length; i++){
-							if(rad[i].checked){
-									radval = $("input:radio[name=rad]:checked").val();
-									url = "user.php?func=getone&id=" + radval;
-									$.post(
-										url,
-										function(data){
-												data = JSON.parse(data);
-												if(data.code != 0){
-														alert(data.msg);
-														return false;
-														}
-
-													var jsontip = $("#tagUser");
-													var strHtml = "";
-													jsontip.empty();
-													strHtml += "<table border='1' align='center'>";
-													strHtml += "<input type='hidden' name='id' value='" + radval +"'></input>";
-													$.each(
-														data.data,
-														function(infoIndex, info){
-																strHtml += "<tr><td>Name<input type='text' id='name' name='name' class='nav_td_input' align='left' value='" + htmlEncode(info['name']) + "'></input></td></tr>";
-																strHtml += "<tr><td>Tel<input type='text' id='tel' name='tel' class='nav_td_input' align='left' value='" + htmlEncode(info['tel']) + "'></input></td></tr>";
-																strHtml += "<tr><td>Addr<input type='text' id='addr' name='addr' class='nav_td_input' align='left' value='" + htmlEncode(info['addr']) + "'></input></td></tr>";
-																strHtml += "<tr><td>Cert<input type='text' id='cert' name='cert' class='nav_td_input' align='left' value='" + htmlEncode(info['cert']) + "'></input></td></tr>";
-																}
-													);
-													strHtml += "</table>";
-													jsontip.html(strHtml);
-												}
-									);
-									}
-							}
-					});
-			$("#sub").click(function(){
-					var name = $("input[name=name]").val();
-					var tel = $("input[name=tel]").val();
-					var addr = $("input[name=addr]").val();
-					var cert = $("input[name=cert]").val();
-					var id = $("input[name=id]").val();
-					var url = "";
-					url = "user.php?func=update&id=" + id;
-					$.post(
-						url,
-						{name:name, tel:tel, addr:addr, cert:cert},
-						function(data){
-									data = JSON.parse(data);
-									if(data.code != 0){
-											alert(data.msg);
-											return false;
-											}
-									location.href = "userinfo.html";
+										jsontip.html(strHtml);
+										}
+								);
 								}
-					);
+								}
+				});
+				$("#sub").click(function(){
+								var name = $("input[name=name]").val();
+								var tel = $("input[name=tel]").val();
+								var addr = $("input[name=addr]").val();
+								var cert = $("input[name=cert]").val();
+								var id = $("input[name=id]").val();
+								var url = "";
+								url = "user.php?func=update&id=" + id;
+								$.post(
+										url,
+										{name:name, tel:tel, addr:addr, cert:cert},
+										function(data){
+										data = JSON.parse(data);
+										if(data.code != 0){
+										alert(data.msg);
+										return false;
+										}
+										location.href = "userinfo.html";
+										}
+									  );
 
-					$("#sub").hide();
-					});
-			$("#deleteuser").click(function(){
-					var rad = $("input:radio[name=rad]");
-					var radval = 0;
-					var url = "";
-					for(var i = 0; i < rad.length; i++){
-							if(rad[i].checked){
-									radval = $("input:radio[name=rad]:checked").val();
-									url = "user.php?func=del&id=" + radval;
-									$.post(
+								$("#sub").hide();
+				});
+				$("#deleteuser").click(function(){
+								var rad = $("input:radio[name=rad]");
+								var radval = 0;
+								var url = "";
+								for(var i = 0; i < rad.length; i++){
+								if(rad[i].checked){
+								radval = $("input:radio[name=rad]:checked").val();
+								url = "user.php?func=del&id=" + radval;
+								$.post(
 										url,
 										function(data){
-													data = JSON.parse(data);
-													if(data.code != 0){
-																alert(data.msg);
-																return false;
-															}
+										data = JSON.parse(data);
+										if(data.code != 0){
+										alert(data.msg);
+										return false;
+										}
 
-													location.href = "userinfo.html";
-												}
-									);
-									}
-							}
-					$("#deletebook").hide();
-					});
-		});
-	</script>
+										location.href = "userinfo.html";
+										}
+									  );
+								}
+								}
+								$("#deletebook").hide();
+				});
+});
+</script>
 <title>user info</title>
 </head>
 <body>
 
-		<div>
-			<button id="adduser" name="adduser" type="button"  class="nav_btn">add</button>
-			<button id="listuser" name="listuser" type="button" class="nav_btn">list</button>
-			<button id="changeuser" name="changeuser" type="button" class="nav_btn">change</button>
-			<button id="deleteuser" name="deleteuser" type="button" class="nav_btn">delete</button>
-			<button id="sub" name="sub" type="button" class="nav_btn">submit</button>
-		</div>
-	
-		<div id="tagUser"><h2>add user</h2></div>
+<div>
+<button id="adduser" name="adduser" type="button"  class="nav_btn">add</button>
+<button id="listuser" name="listuser" type="button" class="nav_btn">list</button>
+<button id="changeuser" name="changeuser" type="button" class="nav_btn">change</button>
+<button id="deleteuser" name="deleteuser" type="button" class="nav_btn">delete</button>
+<button id="sub" name="sub" type="button" class="nav_btn">submit</button>
+</div>
+
+<div id="tagUser"><h2>add user</h2></div>
 </body>
 </html>

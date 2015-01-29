@@ -5,52 +5,65 @@
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 <title>update book</title>
 <script language="javascript">
-		$(document).ready(function(){
-			$('#btn1').click(function(){
-				var name = $('input[name=name]').val();
-				var cate = $('input[name=cate]').val();
-				var page = $('input[name=page]').val();
-				var content =$('input[name=content]').val();
+$(document).ready(function(){
+				if(true){
 				$.post(
-					'book.php?func=update',
-					{name:name, cate:cate, page:page, content:content},
-					function(data){
+						"user.php?func=isLogin",
+						function(data){
 						data = JSON.parse(data);
 						if(data.code != 0){
-							alert(data.msg);
-							return false;
+						alert(data.msg);
+						location.href = "index.html";
+						return false;
 						}
-						location.href = 'bookinfo.html';
-					}
-				);
-			});	
-		});
-	</script>
+						//location.href = "index.html";
+						}
+					  );}
+				$('#btn1').click(function(){
+						var name = $('input[name=name]').val();
+						var cate = $('input[name=cate]').val();
+						var page = $('input[name=page]').val();
+						var content =$('input[name=content]').val();
+						$.post(
+								'book.php?func=update',
+								{name:name, cate:cate, page:page, content:content},
+								function(data){
+								data = JSON.parse(data);
+								if(data.code != 0){
+								alert(data.msg);
+								return false;
+								}
+								location.href = 'bookinfo.html';
+								}
+							  );
+						});	
+});
+</script>
 </head>
 
 <body>
-	<div>
-		<form id="updatebook" name="updatebook">
-			<table border="1" align="center">
-				<tr>
-					<td>Name <input type="text" name="name" align="left" class="nav_td_input"/></td>
-				</tr>
-				<tr>
-					<td>Category <input type="text" name="cate" align="left" class="nav_td_input"/></td>
-				</tr>
-				<tr>
-					<td>Page <input type="text" name="page" align="left" class="nav_td_input" /></td>
-				</tr>
-				<tr>
-					<td>Content <input type="text" name="content" align="left" class="nav_td_input"/></td>
-				</tr>
-				<tr>
-					<button id="btn1" type="button" name="submit" >提交</button>
-				</tr>
-			</table>
-		</form>
+<div>
+<form id="updatebook" name="updatebook">
+<table border="1" align="center">
+<tr>
+<td>Name <input type="text" name="name" align="left" class="nav_td_input"/></td>
+</tr>
+<tr>
+<td>Category <input type="text" name="cate" align="left" class="nav_td_input"/></td>
+</tr>
+<tr>
+<td>Page <input type="text" name="page" align="left" class="nav_td_input" /></td>
+</tr>
+<tr>
+<td>Content <input type="text" name="content" align="left" class="nav_td_input"/></td>
+</tr>
+<tr>
+<button id="btn1" type="button" name="submit" >提交</button>
+</tr>
+</table>
+</form>
 
-	</div>
+</div>
 
 </body>
 </html>

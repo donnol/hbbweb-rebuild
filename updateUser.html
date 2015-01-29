@@ -6,52 +6,65 @@
 <title>update user</title>
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js" />
 <script>
-	$(document).ready(function(){
-		$('#btn1').click(function(){
-			var name = $('input[name=name]').val();
-			var tel = $('input[name=tel]').val();
-			var addr = $('input[name=addr]').val();
-			var cert = $('input[name=cert]').val();
-			$.post(
-				'user.php?func=add',
-				{ name:name, tel:tel, addr:addr, cert:cert},
-				function(data){
-					data = JSON.parse(data);
-					if(data.code != 0){
+$(document).ready(function(){
+				if(true){
+				$.post(
+						"user.php?func=isLogin",
+						function(data){
+						data = JSON.parse(data);
+						if(data.code != 0){
 						alert(data.msg);
+						location.href = "index.html";
 						return false;
-					}
-					location.href = 'userinfo.html';
-				}
-			);
-		});
-	});
+						}
+						//location.href = "index.html";
+						}
+					  );}
+				$('#btn1').click(function(){
+						var name = $('input[name=name]').val();
+						var tel = $('input[name=tel]').val();
+						var addr = $('input[name=addr]').val();
+						var cert = $('input[name=cert]').val();
+						$.post(
+								'user.php?func=add',
+								{ name:name, tel:tel, addr:addr, cert:cert},
+								function(data){
+								data = JSON.parse(data);
+								if(data.code != 0){
+								alert(data.msg);
+								return false;
+								}
+								location.href = 'userinfo.html';
+								}
+							  );
+						});
+});
 </script>
 </head>
 
 <body>
-	<div>
-		<form id="adduser" name="adduser">
-			<table border="1" align="center">
-				<tr>
-					<td>Name <input type="text" name="name" align="left" class="nav_td_input" /></td>
-				</tr>
-				<tr>
-					<td>Telephone <input type="text" name="tel" align="left" class="nav_td_input" /></td>
-				</tr>
-				<tr>
-					<td>Address <input type="text" name="addr" align="left" class="nav_td_input" /></td>
-				</tr>
-				<tr>
-					<td>Certificate <input type="text" name="cert" align="left" class="nav_td_input" /></td>
-				</tr>
-				<tr>
-					<button id="btn1" type="button" name="submit" >提交</button>
-				</tr>
-			</table>
-		</form>
+<div>
+<form id="adduser" name="adduser">
+<table border="1" align="center">
+<tr>
+<td>Name <input type="text" name="name" align="left" class="nav_td_input" /></td>
+</tr>
+<tr>
+<td>Telephone <input type="text" name="tel" align="left" class="nav_td_input" /></td>
+</tr>
+<tr>
+<td>Address <input type="text" name="addr" align="left" class="nav_td_input" /></td>
+</tr>
+<tr>
+<td>Certificate <input type="text" name="cert" align="left" class="nav_td_input" /></td>
+</tr>
+<tr>
+<button id="btn1" type="button" name="submit" >提交</button>
+</tr>
+</table>
+</form>
 
-	</div>
+</div>
 
 </body>
 </html>

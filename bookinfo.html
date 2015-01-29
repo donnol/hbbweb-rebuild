@@ -4,148 +4,162 @@
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 <title>book info</title>
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
-	<script language="javascript">
-		function htmlEncode(str){
-					return $('<div/>').text(str).html();
-				}
-		function htmlDecode(str){
-					return $('<div/>').html(str).text();
-				}
-		$(document).ready(function(){
+<script language="javascript">
+function htmlEncode(str){
+		return $('<div/>').text(str).html();
+}
+function htmlDecode(str){
+		return $('<div/>').html(str).text();
+}
+$(document).ready(function(){
+				if(true){
+				$.post(
+						"user.php?func=isLogin",
+						function(data){
+						data = JSON.parse(data);
+						if(data.code != 0){
+						alert(data.msg);
+						location.href = "index.html";
+						return false;
+						}
+						//location.href = "index.html";
+						}
+					  );}
 				$("#sub").hide();
-			$("#listbook").click(function(){
-					$("#changebook").show();
-					$("#deletebook").show();
-					$.getJSON("book.php?func=get",
-							function(data){
-										var jsontip = $("#tagBook");
-										var strHtml = "";
-										jsontip.empty();
-										strHtml += "<table border='1' align='center'><tr><td></td><td>id</td><td>name</td><td>category</td><td>page</td><td>content</td></tr>";
-										$.each(
-											data.data,
-											function(infoIndex, info){
-														strHtml += "<tr><td><input type='radio' name='rad' value='" + htmlEncode(info["id"]) + "'>";
-														strHtml += "</input></td><td>" + htmlEncode(info["id"]) + "</td>";
-														strHtml += "<td>" + htmlEncode(info["name"]) + "</td>";
-														strHtml += "<td>" + htmlEncode(info["category"]) + "</td>";
-														strHtml += "<td>" + htmlEncode(info["page"]) + "</td>";
-														strHtml += "<td>" + htmlEncode(info["content"]) + "</td></tr>";
-													}
-										);
-										strHtml += "</table>";
-										jsontip.html(strHtml);
-									}
-					);
-			});
-			$("#changebook").click(function(){
-					$("#sub").show();
-					$("#deletebook").hide();
-					$("#addbook").hide();
-					$("#listbook").hide();
-					var rad = $("input:radio[name=rad]");
-					var radval = 0;
-					var url = "";
-					for(var i = 0; i<rad.length;i++){
-							if(rad[i].checked){
-									radval = $("input:radio[name=rad]:checked").val();
-									//alert(radval);
-									url = "book.php?func=getone&id=" + radval;
-									$.post(
+				$("#listbook").click(function(){
+						$("#changebook").show();
+						$("#deletebook").show();
+						$.getJSON("book.php?func=get",
+								function(data){
+								var jsontip = $("#tagBook");
+								var strHtml = "";
+								jsontip.empty();
+								strHtml += "<table border='1' align='center'><tr><td></td><td>id</td><td>name</td><td>category</td><td>page</td><td>content</td></tr>";
+								$.each(
+										data.data,
+										function(infoIndex, info){
+										strHtml += "<tr><td><input type='radio' name='rad' value='" + htmlEncode(info["id"]) + "'>";
+										strHtml += "</input></td><td>" + htmlEncode(info["id"]) + "</td>";
+										strHtml += "<td>" + htmlEncode(info["name"]) + "</td>";
+										strHtml += "<td>" + htmlEncode(info["category"]) + "</td>";
+										strHtml += "<td>" + htmlEncode(info["page"]) + "</td>";
+										strHtml += "<td>" + htmlEncode(info["content"]) + "</td></tr>";
+										}
+									  );
+								strHtml += "</table>";
+								jsontip.html(strHtml);
+								}
+								);
+				});
+				$("#changebook").click(function(){
+								$("#sub").show();
+								$("#deletebook").hide();
+								$("#addbook").hide();
+								$("#listbook").hide();
+								var rad = $("input:radio[name=rad]");
+								var radval = 0;
+								var url = "";
+								for(var i = 0; i<rad.length;i++){
+								if(rad[i].checked){
+								radval = $("input:radio[name=rad]:checked").val();
+								//alert(radval);
+								url = "book.php?func=getone&id=" + radval;
+								$.post(
 										url,
 										function(data){
-												data = JSON.parse(data);
-												if(data.code != 0){
-														alert(data.msg);
-														return false;
-														}
-
-												var jsontip = $("#tagBook");
-												var strHtml = "";
-												jsontip.empty();
-												strHtml += "<table border='1' align='center'>";
-												strHtml += "<input type='hidden' name='id' value='" + radval + "'></input>";
-												$.each(
-													data.data,
-													function(infoIndex, info){
-															strHtml += "<tr><td>Name<input type='text' id='name' name='name' class='nav_td_input' align='left' value='" + htmlEncode(info['name']) + "'></input></td></tr>";
-															strHtml += "<tr><td>Category<input type='text' id='cate' name='cate' class='nav_td_input' align='left' value='" + htmlEncode(info['category']) + "'></input></td></tr>";
-															strHtml += "<tr><td>Page<input type='text' id='page' name='page' class='nav_td_input' align='left' value='" + htmlEncode(info['page']) + "'></input></td></tr>";
-															strHtml += "<tr><td>Content<input type='text' id='content' name='content' class='nav_td_input' align='left' value='" + htmlEncode(info['content']) + "'></input></td></tr>";
-															}
-												);
-												strHtml += "</table>";
-												jsontip.html(strHtml);
-												}
-									);
-									//radval = 0;
-							}
-							}
-					});
-			$("#sub").click(function(){
-					var name = $("input[name=name]").val();
-					var cate = $("input[name=cate]").val();
-					var page = $("input[name=page]").val();
-					var content = $("input[name=content]").val();
-					var id = $("input[name=id]").val();
-					var url = "";
-					url = "book.php?func=update&id=" + id ;
-					$.post(
-						url,
-						{name:name, cate:cate, page:page, content:content},
-						function(data){
-								data = JSON.parse(data);
-								if(data.code != 0){
+										data = JSON.parse(data);
+										if(data.code != 0){
 										alert(data.msg);
 										return false;
 										}
-								location.href = "bookinfo.html";
+
+										var jsontip = $("#tagBook");
+										var strHtml = "";
+										jsontip.empty();
+										strHtml += "<table border='1' align='center'>";
+										strHtml += "<input type='hidden' name='id' value='" + radval + "'></input>";
+										$.each(
+												data.data,
+												function(infoIndex, info){
+												strHtml += "<tr><td>Name<input type='text' id='name' name='name' class='nav_td_input' align='left' value='" + htmlEncode(info['name']) + "'></input></td></tr>";
+												strHtml += "<tr><td>Category<input type='text' id='cate' name='cate' class='nav_td_input' align='left' value='" + htmlEncode(info['category']) + "'></input></td></tr>";
+												strHtml += "<tr><td>Page<input type='text' id='page' name='page' class='nav_td_input' align='left' value='" + htmlEncode(info['page']) + "'></input></td></tr>";
+												strHtml += "<tr><td>Content<input type='text' id='content' name='content' class='nav_td_input' align='left' value='" + htmlEncode(info['content']) + "'></input></td></tr>";
+												}
+											  );
+										strHtml += "</table>";
+										jsontip.html(strHtml);
+										}
+								);
+								//radval = 0;
 								}
-					);
-					$("#sub").hide();
-					});
-			$("#addbook").click(function(){
-				location.href = "addBook.html";
-			});
-			$("#deletebook").click(function(){
-					var rad = $("input:radio[name=rad]");
-					var radval = 0;
-					var url = "";
-					for(var i=0;i<rad.length; i++){
-							if(rad[i].checked){
-									radval = $("input:radio[name=rad]:checked").val();
-									url = "book.php?func=del&id=" + radval;
-									$.post(
+								}
+				});
+				$("#sub").click(function(){
+								var name = $("input[name=name]").val();
+								var cate = $("input[name=cate]").val();
+								var page = $("input[name=page]").val();
+								var content = $("input[name=content]").val();
+								var id = $("input[name=id]").val();
+								var url = "";
+								url = "book.php?func=update&id=" + id ;
+								$.post(
+										url,
+										{name:name, cate:cate, page:page, content:content},
+										function(data){
+										data = JSON.parse(data);
+										if(data.code != 0){
+										alert(data.msg);
+										return false;
+										}
+										location.href = "bookinfo.html";
+										}
+									  );
+								$("#sub").hide();
+				});
+				$("#addbook").click(function(){
+								location.href = "addBook.html";
+								});
+				$("#deletebook").click(function(){
+								var rad = $("input:radio[name=rad]");
+								var radval = 0;
+								var url = "";
+								for(var i=0;i<rad.length; i++){
+								if(rad[i].checked){
+								radval = $("input:radio[name=rad]:checked").val();
+								url = "book.php?func=del&id=" + radval;
+								$.post(
 										url,
 										function(data){
-												data = JSON.parse(data);
-												if(data.code != 0){
-														alert(data.msg);
-														return false;
-														}
-												location.href = "bookinfo.html";
-												}
-									);
-									}
-							}
-					$("#deletebook").hide();
-					});
-		});
-	</script>
+										data = JSON.parse(data);
+										if(data.code != 0){
+										alert(data.msg);
+										return false;
+										}
+										location.href = "bookinfo.html";
+										}
+									  );
+								}
+								}
+								$("#deletebook").hide();
+				});
+});
+</script>
 </head>
 
 <body>
-	<div class="nav" id="d1">
-		<div>
-			<button id="listbook" name="listbook" class="nav_btn" >list</button>
-			<button id="addbook" name="addbook" class="nav_btn" >add</button>
-			<button id='changebook' name='changebook' class='nav_btn' >change</button>
-			<button id='deletebook' name='deletebook' class='nav_btn' >delete</button>
-			<button id="sub" name="sub" class="nav_btn">submit</button>								
-		</div>
-		<div id="tagBook">
-			<h2>add book</h2>
-		</div>
-	</div>
+<div class="nav" id="d1">
+<div>
+<button id="listbook" name="listbook" class="nav_btn" >list</button>
+<button id="addbook" name="addbook" class="nav_btn" >add</button>
+<button id='changebook' name='changebook' class='nav_btn' >change</button>
+<button id='deletebook' name='deletebook' class='nav_btn' >delete</button>
+<button id="sub" name="sub" class="nav_btn">submit</button>								
+</div>
+<div id="tagBook">
+<h2>add book</h2>
+</div>
+</div>
 </body>
-</html>
+<
+h:tml>
