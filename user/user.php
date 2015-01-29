@@ -12,6 +12,15 @@ class User{
 		$this->hasSessionStart = true;
 	}
 	public function add($name,$password,$tel,$addr,$cert){
+		$re = $this->db->select('t_user', array('name'=>$name));
+		if($re['code'] == 0 && count($re['data']) != 0){
+				return array(
+					'code'=>1,
+					'msg'=>'name is already exists',
+					'data'=>''
+				);
+				}
+		else{
 		return $this->db->insert('t_user',array(
 			'name'=>$name,
 			'pwd'=>sha1($password),
@@ -19,6 +28,7 @@ class User{
 			'addr'=>$addr,
 			'cert'=>$cert,
 		));
+		}
 	}
 	public function del($id){
 		return $this->db->delete('t_user',array(
@@ -30,6 +40,9 @@ class User{
 	}
 	public function getone($id){
 			return $this->db->select('t_user', array('id'=>$id,));
+			}
+	public function listname(){
+			return $this->db->listname('t_user');	
 			}
 	public function isLogin(){
 		$this->beginSession();
@@ -71,6 +84,15 @@ class User{
 	}
 	
 	public function update($name,$tel,$addr,$cert,$id){
+		$re = $this->db->update('t_user', array('name'=>$name));
+		if($re['code'] == 0 && count($re['data'] != 0)){
+					return array(
+						'code'=>1,
+						'msg'=>'name is already exist.',
+						'data'=>''
+					);
+				}
+		else{
 		return $this->db->update('t_user', array(
 			'name'=>$name,
 			'tel'=>$tel,
@@ -79,6 +101,7 @@ class User{
 		), array(
 			'id'=>$id,
 		));
+		}
 	}
 	
 	public function htmlEncode($val){

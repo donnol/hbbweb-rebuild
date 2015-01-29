@@ -10,8 +10,22 @@ function add(){
 	}
 	
 	$pwd = '123';
+	$name = $_POST["name"];
+	/*$data = listname();
+	$dt = $data['data'];
+	for($i = 0;$i < count($dt); $i++){
+			if( $name == $dt[i]){
+					$dtt =  array(
+							'code'=>1,
+							'msg'=>'error'.$name,
+							'data'=>''
+						);
+					echo json_encode($dtt);
+					}
+			}
+*/
 	$result = $user->add(
-		$_POST["name"],
+		$name,
 		$pwd,
 		$_POST["tel"],
 		$_POST["addr"],
@@ -75,6 +89,16 @@ function getone(){
 		$result = $user->getone($id);
 		echo json_encode($result);
 		}
+function listname(){
+		global $user;
+		$result = $user->isLogin();
+		if($result['code'] != 0){
+				header("Location:index.html");
+				exit();
+				}
+		$result  = $user->listname();
+		echo json_encode($result);
+		}
 function login(){
 	global $user;
 	$result = $user->login(
@@ -103,6 +127,8 @@ else if( $func == 'get')
 		get();
 else if ($func =='getone')
 		getone();
+else if($func == 'listname')
+		listname();
 else
 	echo 'unknown func!'.$func;
 ?>

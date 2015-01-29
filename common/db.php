@@ -103,6 +103,34 @@ class DB{
 		);
 	}
 
+	public function listname($table, $data){
+			$result = $this->connect();
+			if( $result['code'] != 0){
+					return $result;
+					}
+			$db = $result['data'];
+
+			$sql = 'select name from ';
+			$sql .= $this->security->sqlEncode($table);
+			$query = mysqli_query($db,$sql);
+			if( $query == false){
+					return array(
+						'code' => 1,
+						'msg' => 'wrong in'.$sql,
+						'data' => ''
+					);
+					}
+				$data = array();
+				while($singledata = mysqli_fetch_array($query, MYSQL_ASSOC)){
+						$data[] = $singledata;
+						}
+					return array(
+						'code'=>0,
+						'msg'=>'',
+						'data'=>$data
+					);
+			}
+
 	public function delete($table,$data){
 		$result = $this->connect();
 		if( $result['code'] != 0 )
