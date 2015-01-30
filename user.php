@@ -6,6 +6,7 @@ function add(){
 		$result = $user->isLogin();
 		if( $result['code'] != 0 ){
 				echo json_encode($result);
+				return;
 		}
 
 		$pwd = '123';
@@ -24,6 +25,7 @@ function del(){
 		$result = $user->isLogin();
 		if( $result['code'] != 0 ){
 				echo json_encode($result);
+				return;
 		}
 
 		$result = $user->del(
@@ -36,7 +38,10 @@ function update(){
 		$result = $user->isLogin();
 		if($result['code'] != 0){
 				echo json_encode($result);
+				return;
 		}
+				
+				
 
 		$result = $user->update(
 						$_POST["name"],
@@ -52,6 +57,7 @@ function get(){
 		$result = $user->isLogin();
 		if( $result['code'] != 0){
 				echo json_encode($result);
+				return;
 		}
 		$result = $user->get();
 		echo json_encode($result);
@@ -61,18 +67,10 @@ function getone(){
 		$result = $user->isLogin();
 		if($result['code'] != 0){
 				echo json_encode($result);
+				return;
 		}
 		$id = $_GET['id'];
 		$result = $user->getone($id);
-		echo json_encode($result);
-}
-function listname(){
-		global $user;
-		$result = $user->isLogin();
-		if($result['code'] != 0){
-				echo json_encode($result);
-		}
-		$result  = $user->listname();
 		echo json_encode($result);
 }
 function login(){

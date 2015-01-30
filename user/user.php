@@ -39,13 +39,10 @@ class User{
 										));
 		}
 		public function get(){
-				return @$this->db->select('t_user');
+				return $this->db->select('t_user', array());
 		}
 		public function getone($id){
 				return $this->db->select('t_user', array('id'=>$id,));
-		}
-		public function listname(){
-				return $this->db->listname('t_user');	
 		}
 		public function isLogin(){
 				$this->beginSession();
@@ -87,7 +84,7 @@ class User{
 		}
 
 		public function update($name,$tel,$addr,$cert,$id){
-				$result = $this->db->findnamebyid('t_user', array('id'=>$id));
+				$result = $this->db->select('t_user', array('id'=>$id));
 				if($result['code'] != 0)
 						return $result;
 				$data = $result['data'];
@@ -126,10 +123,6 @@ class User{
 														'id'=>$id,
 														));
 				}
-		}
-
-		public function htmlEncode($val){
-				return $this->db->security->htmlEncode($val);
 		}
 
 		public function logout(){

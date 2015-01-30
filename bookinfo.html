@@ -6,12 +6,6 @@
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="scripts/all.js"></script>
 <script language="javascript">
-/*function htmlEncode(str){
-  return $('<div/>').text(str).html();
-  }
-  function htmlDecode(str){
-  return $('<div/>').html(str).text();
-  }*/
 $(document).ready(function(){
 				isLogin();
 				$("#sub").hide();
@@ -33,13 +27,11 @@ $(document).ready(function(){
 								data.data,
 								function(infoIndex, info){
 								strHtml += "<tr><td><input type='radio' name='rad' value='" + htmlEncode(info["id"]) + "'></input></td>";
-
 								strHtml += "<td>" + htmlEncode(info["id"]) + "</td>";
 								strHtml += "<td>" + htmlEncode(info["name"]) + "</td>";
 								strHtml += "<td>" + htmlEncode(info["category"]) + "</td>";
 								strHtml += "<td>" + htmlEncode(info["page"]) + "</td>";
 								strHtml += "<td>" + htmlEncode(info["content"]) + "</td>";
-
 								strHtml += "</tr>";
 								}
 							  );

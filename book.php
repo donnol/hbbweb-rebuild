@@ -9,6 +9,7 @@ function add(){
 		$result = $user->isLogin();
 		if( $result['code'] != 0 ){
 				echo json_encode($result);
+				return;
 		}
 
 		$result = $book->add(
@@ -25,6 +26,7 @@ function del(){
 		$result = $user->isLogin();
 		if( $result['code'] != 0 ){
 				echo json_encode($result);
+				return;
 		}
 
 		$result = $book->del(
@@ -38,6 +40,7 @@ function update(){
 		$result = $user->isLogin();
 		if($result['code'] != 0){
 				echo json_encode($result);
+				return;
 		}
 
 		$result = $book->update(
@@ -55,6 +58,7 @@ function get(){
 		$result = $user->isLogin();
 		if($result['code'] != 0){
 				echo json_encode($result);
+				return;
 		}
 
 		$result = $book->get();
@@ -66,6 +70,7 @@ function getone(){
 		$result = $user->isLogin();
 		if($result['code'] != 0){
 				echo json_encode($result);
+				return;
 		}
 		$id = $_GET['id'];
 		$result = $book->getone($id);

@@ -37,7 +37,7 @@ class Book{
 		}
 
 		public function update($name,$category,$page,$content, $id){
-				$result = $this->db->findnamebyid('t_book', array('id'=>$id));
+				$result = $this->db->select('t_book', array('id'=>$id));
 				if($result['code'] != 0)
 						return $result;
 				$data = $result['data'];
@@ -80,10 +80,6 @@ class Book{
 
 		public function getone($id){
 				return $this->db->select('t_book', array('id'=>$id));
-		}
-
-		public function htmlEncode($val){
-				return $this->db->security->htmlEncode($val);
 		}
 };
 ?>

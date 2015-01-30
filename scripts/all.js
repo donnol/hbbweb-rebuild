@@ -90,8 +90,71 @@ function isEmpty(element){
 		if(value == ""){
 				alert("input could not be empty");
 				return true;
-				}
-		return false;
 		}
+		return false;
+}
+
+//build a table which show the data from the database'tables;
+function makeTable(table, position){
+		var url = "";
+		url += table + ".php?func=get";
+		$.getJSON(
+						url,
+						function(data){
+						var url2 = "";
+						url2 += table + "info.html";
+						if(data.code != 0){
+						alert(data.msg);
+						location.href = url2;
+						return false;
+						}
+						var strHtml = "";
+						position.empty();
+						var i = 0;
+						strHtml += "<table border='1' align='center'>";
+						$.each(
+								data.data,
+								function(infoIndex, info){
+								//make the head line at first
+								$.each(
+										info,
+										function(key, val){
+											strHtml += "<td>key</td>";
+										}
+									  );//after this each, i can get the head line"<td>id</td><td>name</td>..."
+								//make the data line 
+								}
+							  );
+						}
+		);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
