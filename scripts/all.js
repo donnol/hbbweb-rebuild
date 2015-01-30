@@ -9,22 +9,39 @@
 /*
  *
  */
-function createTable(position, data){
+function tableHead(data){
+		var table = "";
+		table += "<table border='1' align='center'><tr>";
+		table += "<td></td>";
+		var i = 0;
+		$.each(
+						data,
+						function(infoIndex, info){
+						$.each(info,function(key, val){
+								if(i == 0 )
+									table += "<td>" + key + "</td>";
+								});
+						i = i + 1;
+						});
+		table += "</tr></table>";
+		return table;
+}
+
+function tableBody(data){	
 		var table = "";
 		table += "<table border='1' align='center'>";
-		var rownum = data.length;
-		var colnum = data[0].length;
-		for(var i=0 ; i < rownum; i ++){
-				table += "<tr>";
-				for(var j = 0; j < colnum; j ++){
-						table += "<td>";
-						table += htmlEncode(data[i][j]);
-						table += "</td>";
-				}
-				table += "</tr>";
-		}
+		$.each(
+						data,function(infoIndex, info){
+						table += "<tr><td><input type='radio' name='rad' value='" + info['id'] + "'></input></td>";
+						table += "<td>" + info['id'] + "</td>";
+						table += "<td>" + info['name'] + "</td>";
+						table += "<td>" + info['tel'] + "</td>";
+						table += "<td>" + info['addr'] + "</td>";
+						table += "<td>" + info['cert'] + "</td></tr>";
+						});
+
 		table += "</table>";
-		return position.html(table);
+		return table;
 }	
 function formdata(data){
 		var table = "";
@@ -95,66 +112,41 @@ function isEmpty(element){
 }
 
 //build a table which show the data from the database'tables;
-function makeTable(table, position){
-		var url = "";
-		url += table + ".php?func=get";
-		$.getJSON(
-						url,
-						function(data){
-						var url2 = "";
-						url2 += table + "info.html";
-						if(data.code != 0){
-						alert(data.msg);
-						location.href = url2;
-						return false;
-						}
-						var strHtml = "";
-						position.empty();
-						var i = 0;
-						strHtml += "<table border='1' align='center'>";
-						$.each(
-								data.data,
-								function(infoIndex, info){
-								//make the head line at first
-								$.each(
-										info,
-										function(key, val){
-											strHtml += "<td>key</td>";
-										}
-									  );//after this each, i can get the head line"<td>id</td><td>name</td>..."
-								//make the data line 
-								}
-							  );
-						}
-		);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*function makeTable(table, position){
+  var url = "";
+  url += table + ".php?func=get";
+  $.getJSON(
+  url,
+  function(data){
+  var url2 = "";
+  url2 += table + "info.html";
+  if(data.code != 0){
+  alert(data.msg);
+  location.href = url2;
+  return false;
+  }
+  var strHtml = "";
+  var strKey = "";
+  position.empty();
+  var i = 0;
+  strHtml += "<table border='1' align='center'>";
+  $.each(
+  data.data,
+  function(infoIndex, info){
+  strHtml += "<tr>";
+//make the head line at first
+$.each(
+info,
+function(key, val){
+strKey += "<td>key</td>";
+strHtml += "<td>val</td>";
 }
+);//after this each, i can get the head line"<td>id</td><td>name</td>..."
+//make the data line 
+strHtml += "</tr>";
+}
+);
+strHtml += "</table>";
+}
+);
+}*/
