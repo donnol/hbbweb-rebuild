@@ -52,7 +52,7 @@ class DB{
 				}
 				$query = mysqli_query($db,$sql);
 				if( $query == false ){
-						$this->close($db);
+					//	$this->close($db);
 						return array(
 										'code'=>1,
 										'msg'=>'Ö´ÐÐsqlÓï¾äÊ§°Ü '.$sql,
@@ -65,7 +65,7 @@ class DB{
 						//singleData is an array
 						$data[] = $singleData;//ËùÓÐÊý¾Ý
 				}
-				$this->close($db);
+				//$this->close($db);
 				return array(
 								'code'=>0,
 								'msg'=>'',
@@ -98,14 +98,14 @@ class DB{
 										$sql .= ')';
 										$query = mysqli_query($db,$sql);
 										if( $query == false ){
-										$this->close($db);
+									//	$this->close($db);
 										return array(
 												'code'=>1,
 												'msg'=>'Ö´ÐÐsqlÓï¾äÊ§°Ü '.$sql,
 												'data'=>''
 												);
 										}
-										$this->close($db);
+									//	$this->close($db);
 										return array(
 												'code'=>0,
 												'msg'=>'',
@@ -132,14 +132,14 @@ class DB{
 				}
 				$query = mysqli_query($db,$sql);
 				if( $query == false ){
-						$this->close($db);
+						//$this->close($db);
 						return array(
 										'code'=>1,
 										'msg'=>'Ö´ÐÐsqlÓï¾äÊ§°Ü '.$sql,
 										'data'=>''
 									);
 				}
-				$this->close($db);
+				//$this->close($db);
 				return array(
 								'code'=>0,
 								'msg'=>'',
@@ -173,7 +173,7 @@ class DB{
 				}
 				$query = mysqli_query($db,$sql);
 				if( $query == false ){
-						$this->close($db);
+						//$this->close($db);
 						return array(
 										'code'=>1,
 										'msg'=>'Ö´ÐÐsqlÓï¾äÊ§°Ü '.$sql,
@@ -181,7 +181,7 @@ class DB{
 									);
 				}
 
-				$this->close($db);
+				//$this->close($db);
 				return array(
 								'code'=>0,
 								'msg'=>'',
