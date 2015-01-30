@@ -103,7 +103,7 @@ class User{
 														'id'=>$id,
 														));
 
-							
+
 				//
 				$re = $this->db->select('t_user', array('name'=>$name));
 				if($re['code'] != 0)

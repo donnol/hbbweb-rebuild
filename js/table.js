@@ -1,3 +1,4 @@
+//
 function createTable(position, data){
 		var table = "";
 		table += "<table border='1' align='center'>";
@@ -35,3 +36,23 @@ function htmlEncode(str){
 function htmlDecode(str){
 		return $('<div/>').html(str).text();
 }
+
+function isLogin(){
+		$.post(
+			"user.php?func=isLogin",
+			function(data){
+					data = JSON.parse(data);
+					if(data.code != 0){
+							alert(data.msg);
+							location.href = "index.html";
+							return false;
+							}
+					}
+		);
+		}
+
+function heightSync(left, right){
+		var lh = left.height();
+		var rh = right.height();
+		(left > right)?(right.height(left)):(left.height(right));
+		}

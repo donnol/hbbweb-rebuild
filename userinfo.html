@@ -4,62 +4,48 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="scripts/all.js"></script>
 <script language="javascript">
-function htmlEncode(str){
-		return $('<div/>').text(str).html();
-}
-function htmlDecode(str){
-		return $('<div/>').html(str).text();
-}
-$(document).ready(function(){
-				if(true){
-				$.post(
-						"user.php?func=isLogin",
-						function(data){
-						data = JSON.parse(data);
-						if(data.code != 0){
-						alert(data.msg);
-						location.href = "index.html";
-						return false;
-						}
-						}
-					  );}
+$(document).ready(function(){	
+				isLogin();
 				$('#adduser').click(function(){
 						location.href = 'addUser.html';
 						});
 				if(true){
-						$.getJSON(
-								"user.php?func=get",
-								function(data){
-										if(data.code != 0)
-										{
-												alert(data.msg);
-												location.href = "userinfo.html";
-												return false;
-												}
-								var jsontip = $("#tagUser");
-								var strHtml = "";
-								strHtml = "<table border='1' align='center'>";
-								jsontip.empty();
-								strHtml += "<tr><td></td><td>id</td><td>name</td><td>tel</td><td>addr</td><td>cert</td></tr>";
-								$.each(
-										data.data,
-										function(infoindex, info){
-										strHtml += "<tr><td><input type='radio' name='rad' value='" +htmlEncode(info["id"]) + "'>";
-										strHtml += "</input></td><td>" + htmlEncode(info['id']) + "</td>";
-										strHtml += "<td>" + htmlEncode(info['name']) + "</td>";
-										strHtml += "<td>" + htmlEncode(info['tel']) + "</td>";
-										strHtml += "<td>" + htmlEncode(info['addr']) + "</td>";
-										strHtml += "<td>" + htmlEncode(info['cert']) + "</td>"; 
-										strHtml += "</tr>";
-										}	
-									  );
-								strHtml += "</table>";
-								jsontip.html(strHtml);		
+				$.getJSON(
+						"user.php?func=get",
+						function(data){
+						if(data.code != 0)
+						{
+						alert(data.msg);
+						location.href = "userinfo.html";
+						return false;
+						}
+						var jsontip = $("#tagUser");
+						var strHtml = "";
+						strHtml = "<table border='1' align='center'>";
+						jsontip.empty();
+						strHtml += "<tr><td></td><td>id</td><td>name</td><td>tel</td><td>addr</td><td>cert</td></tr>";
+						$.each(
+								data.data,
+								function(infoindex, info){
+								strHtml += "<tr><td><input type='radio' name='rad' value='" +htmlEncode(info["id"]) + "'>";
+								strHtml += "</input></td><td>" + htmlEncode(info['id']) + "</td>";
+								strHtml += "<td>" + htmlEncode(info['name']) + "</td>";
+								strHtml += "<td>" + htmlEncode(info['tel']) + "</td>";
+								strHtml += "<td>" + htmlEncode(info['addr']) + "</td>";
+								strHtml += "<td>" + htmlEncode(info['cert']) + "</td>"; 
+								strHtml += "</tr>";
 								}	
-						);
+							  );
+						strHtml += "</table>";
+						jsontip.html(strHtml);		
+						}	
+				);
 				}
 				$("#changeuser").click(function(){
+								$("#deleteuser").hide();
+								$("#adduser").hide();
 								$("#sub").show();
 								var rad = $("input:radio[name=rad]");
 								var radval = 0;
@@ -100,28 +86,40 @@ $(document).ready(function(){
 								}
 				});
 				$("#sub").click(function(){
-								var name = $("input[name=name]").val();
-								var tel = $("input[name=tel]").val();
-								var addr = $("input[name=addr]").val();
-								var cert = $("input[name=cert]").val();
+								var nameele = $("input[name=name]");
+								var telele = $("input[name=tel]");
+								var addrele = $("input[name=addr]");
+								var certele = $("input[name=cert]");
+								if(isEmpty(nameele)){
+								location.href = "userinfo.html";
+								return false;
+								}
+
+								var name = nameele.val();
+								var tel = telele.val();
+								var addr = addrele.val();
+								var cert = certele.val();
+
 								var id = $("input[name=id]").val();
 								var url = "";
 								url = "user.php?func=update&id=" + id;
 								$.post(
-										url,
-										{name:name, tel:tel, addr:addr, cert:cert},
-										function(data){
-										data = JSON.parse(data);
-										if(data.code != 0){
-										alert(data.msg);
-										location.href = "userinfo.html";
-										return false;
-										}
-										location.href = "userinfo.html";
-										}
+												url,
+												{name:name, tel:tel, addr:addr, cert:cert},
+												function(data){
+												data = JSON.parse(data);
+												if(data.code != 0){
+												alert(data.msg);
+												location.href = "userinfo.html";
+												return false;
+												}
+												location.href = "userinfo.html";
+												}
 									  );
 
 								$("#sub").hide();
+								$("#deleteuser").show();
+								$("#adduser").show();
 				});
 				$("#deleteuser").click(function(){
 								var rad = $("input:radio[name=rad]");

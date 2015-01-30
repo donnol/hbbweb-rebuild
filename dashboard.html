@@ -2,29 +2,16 @@
 <head>
 <title> home </title>
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="scripts/all.js"></script>
 <link type="text/css" href="./css/style.css" />
 </head>
 <body>
-<script type="text/javascript">
-window.onload=function(){
-		document.getElementById("left").style.height = document.getElementById("tagContent").offSetHeight+"px";
-}
-</script>
 <script language="javascript">
 $(document).ready(function(){
-				if(true){
-				$.post(
-						"user.php?func=isLogin",
-						function(data){
-						data = JSON.parse(data);
-						if(data.code != 0){
-						alert(data.msg);
-						location.href = "index.html";
-						return false;
-						}
-						//location.href = "index.html";
-						}
-					  );}
+				isLogin();
+				var left = $("#left");
+				var right = $("#tagContent");
+				heightSync(left, right);
 				$('#logout').click(function(){
 						$.post(
 								"user.php?func=logout",
@@ -32,7 +19,13 @@ $(document).ready(function(){
 								location.href = 'index.html';}
 							  );
 						});
-});
+				$("#h1").click(function(){
+						$("#ifra").attr("src", "userinfo.html?t=" + Math.random());
+						});
+				$("#h2").click(function(){
+						$("#ifra").attr("src", "bookinfo.html?t=" + Math.random());
+						});
+				});
 </script>
 <div>
 <div class="nav">
@@ -64,15 +57,5 @@ welcome home
 </div>
 </div>
 </div>
-<script>
-$(document).ready(function(){
-				$('#h1').click(function(){
-						$("#ifra").attr('src','userinfo.html?t='+Math.random());
-						});
-				$("#h2").click(function(){
-						$("#ifra").attr('src','bookinfo.html?t='+Math.random());
-						});
-				});
-</script>
 </body>
 </html>
